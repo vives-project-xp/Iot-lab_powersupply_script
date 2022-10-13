@@ -1,7 +1,7 @@
 import paho.mqtt.client as mqtt
 from serial_communication import powerSupply
 
-power = powerSupply('COM5')
+power = powerSupply('/dev/ttyUSB0')
 
 def on_connect(client, userdata, flags, rc):
     # This will be called once the client connects
