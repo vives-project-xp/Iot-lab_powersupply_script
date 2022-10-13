@@ -28,8 +28,9 @@ def on_message(client, userdata, msg):
         power.setVoltage(voltage)
     elif(msg.topic == 'current'):
       current = msg.payload.decode().strip()
-      if(current.isnumeric()):
-        print("current message received")
+      # print("received current after decode:" + current)
+      if(float(current)):
+        print("current message received after float check")
         
         power.setCurrent(current)
 
