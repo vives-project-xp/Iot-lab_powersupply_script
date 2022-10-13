@@ -19,10 +19,13 @@ The serial_communication.py file contains the powerSupply class which has method
 ### __init__
 
 creates the serial object that will be used. Here the port to which the powerSupply is connected needs to be specified.
-Use device manager on windows to find the correct port and the following command on linux.
+Use device manager on windows to find the correct port.
+
+To find the port on linux run the devicesCheck file.
+If you cant run it use the following command.
 
 ```txt
-lsusb (i still have to test this myself!!)
+chmod u+x ./devicesCheck
 ```
 
 ### setVoltage
