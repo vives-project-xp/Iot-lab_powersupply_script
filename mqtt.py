@@ -42,7 +42,7 @@ client = mqtt.Client("python_app") # client ID "mqtt-test"
 client.on_connect = on_connect
 client.on_message = on_message
 client.username_pw_set("mqttuser", "lab1234")
-client.connect('172.16.100.243', 1883)
+client.connect('172.16.101.121', 1883)
 
 client.loop_start()  # Start networking daemon
 # client.loop_forever() # loops in this thread and blocks everything else ?
