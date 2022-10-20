@@ -34,6 +34,14 @@ class powerSupply:
     message = b'OUTput ON\r\n'
     self.conn.write(message)
 
+  def setRandomCurrent(self):
+    self.setCurrent(round(random.uniform(1,10),1))
+    time.sleep(5)
+
+  def setRandomVoltage(self):
+    self.setVoltage(random.randint(22,45))
+    time.sleep(5)
+
 # power = powerSupply('COM5')
 # power.randomVoltage()
 # # time.sleep(20)
