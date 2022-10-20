@@ -1,6 +1,7 @@
 from random import random
 import paho.mqtt.client as mqtt
 from serial_communication import powerSupply
+from threading import Thread
 
 power = powerSupply('/dev/ttyUSB0')
 
@@ -44,7 +45,8 @@ client.on_message = on_message
 client.username_pw_set("mqttuser", "lab1234")
 client.connect('172.16.101.121', 1883)
 
-client.loop_start()  # Start networking daemon
+# Start networking daemon
+mqttThread = Thread(client.loop_forever())
 # client.loop_forever() # loops in this thread and blocks everything else ?
 print("after starting mqtt")
 
