@@ -2,6 +2,7 @@ from random import random
 import paho.mqtt.client as mqtt
 from serial_communication import powerSupply
 from threading import Thread
+import time
 
 power = powerSupply('/dev/ttyUSB0')
 
@@ -38,6 +39,12 @@ def on_message(client, userdata, msg):
         print("current message received after float check")
         power.setCurrent(current)
 
+def printTest():
+    while(True):
+        print("testing")
+        time.sleep(5)
+def startMqtt(client):
+    client.loop_forever()
 
 client = mqtt.Client("python_app") # client ID "mqtt-test"
 client.on_connect = on_connect
@@ -46,9 +53,12 @@ client.username_pw_set("mqttuser", "lab1234")
 client.connect('172.16.101.121', 1883)
 
 # Start networking daemon
-mqttThread = Thread(client.loop_forever())
+mqttThread = Thread(target=startMqtt,args=[client])
+effectsThread = Thread(target=printTest)
 # client.loop_forever() # loops in this thread and blocks everything else ?
 print("after starting mqtt")
+mqttThread.start()
+effectsThread.start()
 
 
 
