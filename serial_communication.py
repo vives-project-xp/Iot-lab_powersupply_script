@@ -1,6 +1,8 @@
 
 import time
+from numpy import true_divide
 import serial
+import random
 
 class powerSupply:
 
@@ -31,3 +33,9 @@ class powerSupply:
   def turnOn(self):
     message = b'OUTput ON\r\n'
     self.conn.write(message)
+
+# power = powerSupply('COM5')
+# power.randomVoltage()
+# # time.sleep(20)
+# # power.stopRandomVoltage()
+# print("random voltage done")

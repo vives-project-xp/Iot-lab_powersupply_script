@@ -1,7 +1,9 @@
+from random import random
 import paho.mqtt.client as mqtt
 from serial_communication import powerSupply
 
 power = powerSupply('/dev/ttyUSB0')
+
 
 def on_connect(client, userdata, flags, rc):
     # This will be called once the client connects
@@ -10,6 +12,8 @@ def on_connect(client, userdata, flags, rc):
     client.subscribe("voltage")
     client.subscribe("current")
     client.subscribe("state")
+    client.subscribe("randomVoltage")
+
 
 def on_message(client, userdata, msg):
     print(f"Message received [{msg.topic}]: {msg.payload}")
@@ -31,23 +35,19 @@ def on_message(client, userdata, msg):
       # print("received current after decode:" + current)
       if(float(current)):
         print("current message received after float check")
-        
         power.setCurrent(current)
+
 
 client = mqtt.Client("python_app") # client ID "mqtt-test"
 client.on_connect = on_connect
 client.on_message = on_message
 client.username_pw_set("mqttuser", "lab1234")
 client.connect('172.16.100.243', 1883)
-client.loop_forever()  # Start networking daemon
 
+client.loop_start()  # Start networking daemon
+# client.loop_forever() # loops in this thread and blocks everything else ?
+print("after starting mqtt")
 
-# port = 1883
-# topic = "python/mqtt"
-# # generate client ID with pub prefix randomly
-# client_id = f'python-mqtt-{random.randint(0, 100)}'
-# username = 'mqtt-user'
-# password = 'lab123'
 
 
 
