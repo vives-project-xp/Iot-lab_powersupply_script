@@ -13,7 +13,7 @@ def calculateSine(input):
 dayLength = (4*60)//5 # >> 300 seconds in 5 minutes and we want to update every 5 seconds
 # print(dayLength)
 nightLength = (1*60)//5
-# print(length)
+print(dayLength + nightLength)
 
 output = []
 for i in range(dayLength):

@@ -1,8 +1,8 @@
 
 import time
-from numpy import true_divide
 import serial
 import random
+
 
 class powerSupply:
 

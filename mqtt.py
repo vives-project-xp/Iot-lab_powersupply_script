@@ -3,6 +3,8 @@ import paho.mqtt.client as mqtt
 from serial_communication import powerSupply
 from threading import Thread
 import time
+import math
+import matplotlib.pyplot as plt
 
 power = powerSupply('COM5')
 
@@ -60,20 +62,35 @@ def on_message(client, userdata, msg):
         randomVoltage = True
         print("turn on effect received")
     
+def calculateSine(input):
+  return round((2.5*math.sin(input-7.9)) + 3.5,1)
 
-def printTest(client):
+def publishCurrentWave(client, currentWave):
   while(True):
-    while(randomCurrent | randomVoltage):
-      if(randomCurrent):
-        number = round(random.uniform(1,10),1)
-        power.setCurrent(number)
-        client.publish("current",number)
-      if(randomVoltage):
-        power.setRandomVoltage()
-      time.sleep(10)
+    while(randomCurrent):
+        for i in range (currentWave.length):
+          time.sleep(5)
+          number = currentWave[i]
+          client.publish("current",number)
 
 def startMqtt(client):
   client.loop_forever()
+
+# Start by calculating the sine wave we want the current to follow
+dayLength = (4*60)//5 # >> 300 seconds in 5 minutes and we want to update every 5 seconds
+# print(dayLength)
+nightLength = (1*60)//5
+# print(length)
+
+output = []
+for i in range(dayLength):
+  output.append(calculateSine(i/7.5))
+
+for i in range(nightLength):
+  output.append(1)
+
+plt.plot(output, color="red")
+plt.show()
 
 client = mqtt.Client("python_app") # client ID "mqtt-test"
 client.on_connect = on_connect
@@ -83,7 +100,7 @@ client.connect('172.16.101.121', 1883)
 
 # Start networking daemon
 mqttThread = Thread(target=startMqtt,args=[client])
-effectsThread = Thread(target=printTest, args=[client])
+effectsThread = Thread(target=publishCurrentWave, args=[client])
 # client.loop_forever() # loops in this thread and blocks everything else ?
 print("after starting mqtt")
 mqttThread.start()
