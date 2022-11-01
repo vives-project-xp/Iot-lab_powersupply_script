@@ -38,13 +38,13 @@ def on_message(client, userdata, msg):
       # print("detected voltage " +voltage)
       # print(voltage.isnumeric())
       voltage = msg.payload.decode().strip()
-      if(voltage.isnumeric()):
+      if(voltage.isnumeric() and (voltage <= 45 or voltage >= 22)):
         print('voltage message received')
         power.setVoltage(voltage)
     elif(msg.topic == 'current'):
       current = msg.payload.decode().strip()
       # print("received current after decode:" + current)
-      if(float(current)):
+      if(float(current) and (current <= 10 or current >= 1)):
         print("current message received after float check")
         power.setCurrent(current)
     elif(msg.topic == 'currentEffect'):
@@ -71,6 +71,7 @@ def publishCurrentWave(client, currentWave):
         for i in range (currentWave.length):
           time.sleep(5)
           number = currentWave[i]
+          power.setCurrent(number)
           client.publish("current",number)
 
 def startMqtt(client):
