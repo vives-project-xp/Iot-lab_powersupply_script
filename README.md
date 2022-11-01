@@ -70,3 +70,27 @@ The expected messages here are 'off' or 'on'. Any other message will do nothing
 When a message with the topic voltage is received the voltage of the power supply will be changed unless the message is not numeric.
 
 When a message with the topic current is received the same thing will happen but for the current of the power supply.
+
+Wanneer een bericht ontvangen wordt met van currentEffect wordt het effect waarin de stroom een sinus volgt aan of uitgezet afhankelijk van het bericht.
+
+### calculateSine
+
+Een functie die de output van een sinus bepaald aan de hand van een output.
+
+### publishCurrentWave
+
+Wanneer randomCurrent True is zal om de 5 seconden de volgende waarde van de berekende sinus gepublished worden naar mqtt en zal de stroom van de voeding naar deze waarde gezet worden.
+
+### Threads
+
+In dit programma moeten we gebruik maken van threads omdat we voor onze mqtt client een oneindige loop starten. Als we hiernaast dus nog andere zaken willen doen zoals het stoppen en starten van het sinus current effect dan hebben we threads nodig.
+Het starten van threads binnen python is niet moeilijk, hieronder een voorbeeld uit het powersupply script.
+
+```python
+from threading import Thread
+mqttThread = Thread(target=startMqtt,args=[client]) # Een thread voor de oneindige loop van mqtt, aan target wordt de functie meegegeven die moet uitgevoerd worden en in args de argumenten die de functie nodig heeft
+effectsThread = Thread(target=publishCurrentWave, args=[client])
+
+mqttThread.start() # om de thread te starten wordt simpelweg op het object de functie start aangeropen
+effectsThread.start()
+```

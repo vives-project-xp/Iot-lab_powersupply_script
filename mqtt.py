@@ -73,6 +73,8 @@ def publishCurrentWave(client, currentWave):
           number = currentWave[i]
           power.setCurrent(number)
           client.publish("current",number)
+          if(not randomCurrent):
+            break
 
 def startMqtt(client):
   client.loop_forever()
