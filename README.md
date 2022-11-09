@@ -16,6 +16,16 @@ pip install pyserial
 
 The serial_communication.py file contains the powerSupply class which has methods that can be used to control the owon SPE series 1 CH DC power supply using scpi commands over USB.
 
+### Wat zijn SCPI commands
+
+SCPI-commando's zijn ASCII-strings, die via de physical layer naar het apparaat worden gestuurd, waardoor alle communicatie-interfaces worden ondersteund. Het gebruik van deze SCPI-commando's is de eenvoudigste manier om een voeding te programmeren, doordat ze onafhankelijk zijn van de driver en programmeertaal.
+
+[Voor meer info en voorbeelden zie de volgende website](https://magna-power.com/assets/docs/html_ts/index-scpi.html#:~:text=SCPI%20commands%20are%20ASCII%20textual,driver%20and%20programming%20environment%20independent.)
+
+Om deze SCPI commands in python te programmeren hebben we gebruik gemaakt van de pySerial library.
+
+[Zie deze site voor de verschillende functies en hun argumenten](https://pyserial.readthedocs.io/en/latest/pyserial_api.html)
+
 ### __init__
 
 creates the serial object that will be used. Here the port to which the powerSupply is connected needs to be specified.
