@@ -34,12 +34,12 @@ def on_message(client, userdata, msg):
         power.turnOn() # zet de voeding aan
     elif(msg.topic == 'voltage'):
       voltage = msg.payload.decode().strip()
-      if(voltage.isnumeric() and (voltage <= 45 or voltage >= 22)): # houd de voltage waarde tussen 22 en 45 anders gebeurt er niets, ook controle of wel een getal ontvangen werd
+      if(voltage.isnumeric() and (int(voltage) <= 45 or int(voltage) >= 22)): # houd de voltage waarde tussen 22 en 45 anders gebeurt er niets, ook controle of wel een getal ontvangen werd
         print('voltage message received') 
         power.setVoltage(voltage) # zet de voltage van de voeding op de ontvangen waarde
     elif(msg.topic == 'current'):
       current = msg.payload.decode().strip()
-      if(float(current) and (current <= 10 or current >= 1)): # houd de voltage waarde tussen 1 en 10 anders gebeurt er niets, ook controle of wel een getal ontvangen werd
+      if(float(current) and (float(current) <= 10 or float(current) >= 1)): # houd de voltage waarde tussen 1 en 10 anders gebeurt er niets, ook controle of wel een getal ontvangen werd
         print("current message received after float check")
         power.setCurrent(current) # zet de current van de voeding op de ontvangen waarde
     elif(msg.topic == 'currentEffect'):
@@ -56,9 +56,16 @@ def calculateSine(input):
 def publishCurrentWave(client, currentWave): # publisht de huidige waarde van de sinus naar de broker en zet ook de current van de voeding naar deze waarde
   while(True):
     while(randomCurrent):
-        for i in range (currentWave.length):
+        for i in range (len(currentWave)):
           time.sleep(5) # update elke 5 seconden
           number = currentWave[i]
+          print(number)
+          if(number == 1.0):
+            client.publish("daytime", "off")
+            print("published daytime off to mqtt")
+          else:
+            client.publish("daytime", "on")
+            print("published daytime on to mqtt")
           power.setCurrent(number)
           client.publish("current",number)
           if(not randomCurrent): # stopt deze loop wannneer randomCurrent false wordt
@@ -87,13 +94,13 @@ client = mqtt.Client("python_app") # client ID "mqtt-test"
 client.on_connect = on_connect
 client.on_message = on_message
 client.username_pw_set("mqttuser", "lab1234")
-client.connect('172.16.101.121', 1883)
+client.connect('172.16.101.210', 1883)
 
 # alle settings voor de connectie met de mqtt broker
 
 # Start networking daemon
 mqttThread = Thread(target=startMqtt,args=[client]) # de mqtt thread
-effectsThread = Thread(target=publishCurrentWave, args=[client]) # de sinus thread
+effectsThread = Thread(target=publishCurrentWave, args=[client, output]) # de sinus thread
 
 mqttThread.start() # start de mqtt thread
 effectsThread.start() # start de sinus thread
