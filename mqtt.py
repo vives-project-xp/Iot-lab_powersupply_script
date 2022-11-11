@@ -57,15 +57,17 @@ def publishCurrentWave(client, currentWave): # publisht de huidige waarde van de
   while(True):
     while(randomCurrent):
         for i in range (len(currentWave)):
-          time.sleep(5) # update elke 5 seconden
+          time.sleep(30) # update elke 5 seconden
           number = currentWave[i]
           print(number)
           if(number == 1.0):
-            client.publish("daytime", "off")
+            # client.publish("daytime", "off")
+            client.publish("state","off")
             print("published daytime off to mqtt")
           else:
-            client.publish("daytime", "on")
-            print("published daytime on to mqtt")
+            client.publish("state", "on")
+            # client.publish("daytime", "on")
+            # print("published daytime on to mqtt")
           power.setCurrent(number)
           client.publish("current",number)
           if(not randomCurrent): # stopt deze loop wannneer randomCurrent false wordt
@@ -74,17 +76,16 @@ def publishCurrentWave(client, currentWave): # publisht de huidige waarde van de
 def startMqtt(client): # functie om de mqtt loop te starten
   client.loop_forever()
 
-# Start by calculating the sine wave we want the current to follow
-dayLength = (4*60)//5 # >> 300 seconds in 5 minutes and we want to update every 5 seconds
+dayLength = (9*60)//30 # >> 300 seconds in 5 minutes and we want to update every 5 seconds
 # print(dayLength)
-nightLength = (1*60)//5
-# print(length)
+nightLength = (1*60)//30
+print(dayLength + nightLength)
 
 output = []
-for i in range(dayLength): # output gedurende de "dag"
-  output.append(calculateSine(i/7.5))
+for i in range(dayLength):
+  output.append(calculateSine(i/3)) # change 3 depending on how many values in sine wave
 
-for i in range(nightLength): # output gedurende de nacht = 1
+for i in range(nightLength):
   output.append(1)
 
 plt.plot(output, color="red") # plot van de sinus (inclusief nacht)
