@@ -7,7 +7,7 @@
 - numpy
 - matplotlib
 
-to install the required modules run the following two commands in the terminal
+to install the required modules run the following commands in the terminal. Gebruik op de pi echter wel pip3 in plaats van pip
 
 ```txt
 pip install paho-mqtt
@@ -16,9 +16,51 @@ pip install numpy
 pip install matplotlib
 ```
 
+## hoe runnen
+
+python ./mqtt.py op windows en python3 ./mqtt.py op de pi.
+
 ## sineWave.py
 
 Een script om de sinus die de dag simuleerd te controleren.
+
+```python
+def calculateSine(input):
+  return round((2.5*math.sin(input-7.6)) + 3.5,1)
+```
+Berekend de output van de sinus met y waarde tussen 1 en 6 en met een minima ongeveer bij x = 0.
+
+```python
+dayLength = (9*60)//30
+nightLength = (1*60)//30
+```
+
+berekend de benodigde elementen voor de dag en nacht.
+9 minuten dag met een update van de stroom elke 30 seconden en 1 minuut nacht met ook een update elke 30 seconden.
+
+```python
+output = []
+for i in range(dayLength):
+  output.append(calculateSine(i/(dayLength/5)))
+```
+
+Er wordt per benodigd element een output berekend. We moeten echter i nog delen omdat we anders meerdere sinussen berekenen. Het is mogelijk om manueel te proberen waardoor je het beste deelt, maar in mijn testen blijkt delen door (dayLength/5) altijd goed te werken.
+
+```python
+for i in range(nightLength):
+  output.append(1)
+```
+
+Voeg voor de lengte van de nacht gewoon 1 toe als output.
+
+```python
+plt.plot(output, color="red")
+plt.show()
+```
+
+In SineWave.py wordt hiervan dan nog een plot gemaakt waarmee je kunt zien of de sinus is hoe je hem wilt.
+
+![voorbeeld sinus](/img/example_sinus.png)
 
 ## serial_communication.py
 

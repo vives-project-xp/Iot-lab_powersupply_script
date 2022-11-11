@@ -51,7 +51,7 @@ def on_message(client, userdata, msg):
         print("turn on effect received")
     
 def calculateSine(input):
-  return round((2.5*math.sin(input-7.9)) + 3.5,1) # berekent de sinus aan de hand van de gegeven input
+  return round((2.5*math.sin(input-7.6)) + 3.5,1) # berekent de sinus aan de hand van de gegeven input
 
 def publishCurrentWave(client, currentWave): # publisht de huidige waarde van de sinus naar de broker en zet ook de current van de voeding naar deze waarde
   while(True):
@@ -83,7 +83,7 @@ print(dayLength + nightLength)
 
 output = []
 for i in range(dayLength):
-  output.append(calculateSine(i/3)) # change 3 depending on how many values in sine wave
+  output.append(calculateSine(i/(dayLength/5))) # change 3 depending on how many values in sine wave
 
 for i in range(nightLength):
   output.append(1)
