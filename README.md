@@ -4,13 +4,21 @@
 
 - pySerial
 - paho-mqtt
+- numpy
+- matplotlib
 
 to install the required modules run the following two commands in the terminal
 
 ```txt
 pip install paho-mqtt
 pip install pyserial
+pip install numpy
+pip install matplotlib
 ```
+
+## sineWave.py
+
+Een script om de sinus die de dag simuleerd te controleren.
 
 ## serial_communication.py
 

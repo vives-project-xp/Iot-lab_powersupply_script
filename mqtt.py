@@ -87,8 +87,8 @@ for i in range(dayLength): # output gedurende de "dag"
 for i in range(nightLength): # output gedurende de nacht = 1
   output.append(1)
 
-plt.plot(output, color="red") # plot van de sinus (inclusief nacht)
-plt.show()
+# plt.plot(output, color="red") # plot van de sinus (inclusief nacht)
+# plt.show()
 
 client = mqtt.Client("python_app") # client ID "mqtt-test"
 client.on_connect = on_connect
