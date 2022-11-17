@@ -18,7 +18,7 @@ pip install matplotlib
 
 ## hoe runnen
 
-python ./mqtt.py op windows en python3 ./mqtt.py op de pi.
+python ./mqtt.py op windows en python3 ./mqtt.py op de pi. MAAK VOOR HET RUNNEN ZEKER DAT HET IP ADDRESS VAN DE MQTT BROKER JUIST STAAT.
 
 ## sineWave.py
 
