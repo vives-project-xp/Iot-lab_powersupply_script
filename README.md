@@ -20,6 +20,8 @@ pip install matplotlib
 
 python ./mqtt.py op windows en python3 ./mqtt.py op de pi. MAAK VOOR HET RUNNEN ZEKER DAT HET IP ADDRESS VAN DE MQTT BROKER JUIST STAAT.
 
+Maak zeker dat je het script opnieuw opstart wanneer je de mqtt broker/home assistant opnieuw opstart.
+
 ## sineWave.py
 
 Een script om de sinus die de dag simuleerd te controleren.
