@@ -62,9 +62,11 @@ def publishCurrentWave(client, currentWave): # publisht de huidige waarde van de
           print(number)
           if(number == 1.0):
             # client.publish("daytime", "off")
+            power.turnOff()
             client.publish("state","off")
             print("published daytime off to mqtt")
           else:
+            power.turnOn()
             client.publish("state", "on")
             # client.publish("daytime", "on")
             # print("published daytime on to mqtt")
