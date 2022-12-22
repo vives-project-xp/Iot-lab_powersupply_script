@@ -78,7 +78,7 @@ def publishCurrentWave(client, currentWave): # publisht de huidige waarde van de
 def startMqtt(client): # functie om de mqtt loop te starten
   client.loop_forever()
 
-dayLength = (9*60)//30 # >> 300 seconds in 5 minutes and we want to update every 5 seconds
+dayLength = (9*60)//30 # >> we want to update every 30 seconds, and the day is 9 minutes
 # print(dayLength)
 nightLength = (1*60)//30
 print(dayLength + nightLength)

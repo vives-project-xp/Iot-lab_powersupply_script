@@ -20,6 +20,12 @@ pip install matplotlib
 
 python ./mqtt.py op windows en python3 ./mqtt.py op de pi. MAAK VOOR HET RUNNEN ZEKER DAT HET IP ADDRESS VAN DE MQTT BROKER JUIST STAAT.
 
+Het ip is aan te passen op lijn 100.
+
+```py
+client.connect('172.16.101.210', 1883)
+```
+
 Maak zeker dat je het script opnieuw opstart wanneer je de mqtt broker/home assistant opnieuw opstart.
 
 ## sineWave.py
